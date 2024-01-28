@@ -5,6 +5,7 @@ export const typeDefs = gql`
     users: [User]
     categories: [Category]
     expenses: [Expense]
+    usersByName(name: String!): [User]
   }
 
   type Mutation {

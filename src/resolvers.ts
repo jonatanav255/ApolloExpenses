@@ -17,6 +17,20 @@ export const resolvers = {
         throw new Error("Failed to fetch users");
       }
     },
+    usersByName: async (_: any, { name }: { name: string }) => {
+      // Assuming you're using a SQL database
+      const query = "SELECT * FROM users WHERE name = $1";
+      const values = [name];
+
+      try {
+        const result = await pool.query(query, values);
+        return result.rows;
+      } catch (err) {
+        console.error(err);
+        throw new Error("Error fetching users by name");
+      }
+    },
+    // },
     categories: async () => {
       const { rows } = await pool.query("SELECT * FROM categories");
       return rows;
