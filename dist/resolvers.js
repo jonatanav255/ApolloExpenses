@@ -14,25 +14,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
 const database_1 = __importDefault(require("./database"));
+const userDataAccess_1 = require("./userDataAccess");
 exports.resolvers = {
     Query: {
         users: () => __awaiter(void 0, void 0, void 0, function* () {
             try {
-                const { rows } = yield database_1.default.query('SELECT * FROM users');
+                const { rows } = yield database_1.default.query("SELECT * FROM users");
                 return rows;
             }
             catch (err) {
                 console.error(err);
-                throw new Error('Failed to fetch users');
+                throw new Error("Failed to fetch users");
             }
         }),
         categories: () => __awaiter(void 0, void 0, void 0, function* () {
-            const { rows } = yield database_1.default.query('SELECT * FROM categories');
+            const { rows } = yield database_1.default.query("SELECT * FROM categories");
             return rows;
         }),
         expenses: () => __awaiter(void 0, void 0, void 0, function* () {
-            const { rows } = yield database_1.default.query('SELECT * FROM expenses');
+            const { rows } = yield database_1.default.query("SELECT * FROM expenses");
             return rows;
+        }),
+    },
+    Mutation: {
+        createUser: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            return (0, userDataAccess_1.addUser)(args);
         }),
     },
 };

@@ -9,6 +9,10 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
     expenses: [Expense]
   }
 
+  type Mutation {
+    createUser(name: String!, email: String!): User
+  }
+
   type User {
     user_id: ID!
     name: String!

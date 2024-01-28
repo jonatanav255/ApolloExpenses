@@ -7,6 +7,10 @@ export const typeDefs = gql`
     expenses: [Expense]
   }
 
+  type Mutation {
+    createUser(name: String!, email: String!): User
+  }
+
   type User {
     user_id: ID!
     name: String!
