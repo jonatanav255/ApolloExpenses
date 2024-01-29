@@ -1,14 +1,9 @@
-import pool from "./database";
-import { addUser } from "./userDataAccess";
+import pool from "../database/database";
+import { addUser } from "../userDataAccess";
 
-interface CreateUserArgs {
-  name: string;
-  email: string;
-}
-
-export const resolvers = {
-  Query: {
-    users: async () => {
+export const userResolvers = {
+    Query: {
+        users: async () => {
       try {
         const { rows } = await pool.query("SELECT * FROM users");
         return rows;
@@ -21,7 +16,6 @@ export const resolvers = {
       // Assuming you're using a SQL database
       const query = "SELECT * FROM users WHERE name = $1";
       const values = [name];
-
       try {
         const result = await pool.query(query, values);
         return result.rows;
@@ -30,14 +24,19 @@ export const resolvers = {
         throw new Error("Error fetching users by name");
       }
     },
-    // },
-    categories: async () => {
-      const { rows } = await pool.query("SELECT * FROM categories");
-      return rows;
-    },
-    expenses: async () => {
-      const { rows } = await pool.query("SELECT * FROM expenses");
-      return rows;
+
+    usersByEmail: async (_: any, { email }: { email: string }) => {
+      // Assuming you're using a SQL database
+      const query = "SELECT * FROM users WHERE email = $1";
+      const values = [email];
+
+      try {
+        const result = await pool.query(query, values);
+        return result.rows;
+      } catch (err) {
+        console.error(err);
+        throw new Error("Error fetching users by name");
+      }
     },
   },
   Mutation: {

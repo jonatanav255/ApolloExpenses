@@ -1,13 +1,10 @@
-import { typeDefs } from './schema';
-import { resolvers } from './resolvers';
-const { ApolloServer } = require('apollo-server-express');
+import { typeDefs } from "./schema/schema";
+import { resolvers } from "./Resolvers/resolvers";
+const { ApolloServer } = require("apollo-server-express");
 
-
-import express, { Application } from 'express';
-
+import express, { Application } from "express";
 
 async function startApolloServer() {
-  
   const app: Application = express();
   const server = new ApolloServer({
     typeDefs,
@@ -23,4 +20,3 @@ async function startApolloServer() {
 }
 
 startApolloServer();
-
