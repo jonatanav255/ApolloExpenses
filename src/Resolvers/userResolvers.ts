@@ -1,5 +1,6 @@
 import pool from "../database/database";
 import { addUser } from "../userDataAccess";
+import { deleteUser } from "../userDataAccess";
 
 export const userResolvers = {
     Query: {
@@ -42,6 +43,9 @@ export const userResolvers = {
   Mutation: {
     createUser: async (_: any, args: { name: string; email: string }) => {
       return addUser(args);
+    },
+    deleteUser: async (_: any, {user_id} : {user_id:string}) => {
+      return deleteUser(user_id);
     },
   },
 };
