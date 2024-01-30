@@ -12,6 +12,7 @@ export const typeDefs = gql`
   type Mutation {
     createUser(name: String!, email: String!): User
     deleteUser(user_id: ID!): User
+    updateUser(user_id: ID!, name: String, email: String): User
   }
 
 

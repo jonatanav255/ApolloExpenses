@@ -1,6 +1,7 @@
 import pool from "../database/database";
 import { addUser } from "../userDataAccess";
 import { deleteUser } from "../userDataAccess";
+import { updateUser } from "../userDataAccess";
 
 export const userResolvers = {
     Query: {
@@ -46,6 +47,9 @@ export const userResolvers = {
     },
     deleteUser: async (_: any, {user_id} : {user_id:string}) => {
       return deleteUser(user_id);
+    },
+    updateUser: async (_: any, args: {user_id: string; name?: string; email?: string}) => {
+      return updateUser(args);
     },
   },
 };
