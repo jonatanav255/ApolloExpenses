@@ -13,3 +13,4 @@ export const resolvers = {
   },
   // Include other types like Subscription if you have them
 };
+console.log("inside")
