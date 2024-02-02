@@ -5,8 +5,10 @@ export const typeDefs = gql`
     users: [User]
     categories: [Category]
     expenses: [Expense]
+    userById(user_id: String!): [User]
     usersByName(name: String!): [User]
     usersByEmail(email: String!): [User]
+    search(term: String!): [SearchResult]
   }
 
   type Mutation {
@@ -15,6 +17,7 @@ export const typeDefs = gql`
     updateUser(user_id: ID!, name: String, email: String): User
   }
 
+  union SearchResult = User | Category
 
   type User {
     user_id: ID!

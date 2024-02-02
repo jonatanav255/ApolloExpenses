@@ -4,14 +4,30 @@ import { deleteUser } from "../userDataAccess";
 import { updateUser } from "../userDataAccess";
 
 export const userResolvers = {
-    Query: {
-        users: async () => {
+  Query: {
+    users: async () => {
       try {
         const { rows } = await pool.query("SELECT * FROM users");
         return rows;
       } catch (err) {
         console.error(err);
         throw new Error("Failed to fetch users");
+      }
+    },
+
+    userById: async (_: any, { user_id }: { user_id: string }) => {
+      const query = "SELECT * FROM USERS WHERE user_id = $1";
+      const values = [user_id];
+
+      try {
+        const { rows } = await pool.query(query, values);
+        if (rows.length === 0) {
+          throw new Error("User not found");
+        }
+        return rows;
+      } catch (err) {
+        console.error(err);
+        throw new Error("Error fetching users by ID");
       }
     },
     usersByName: async (_: any, { name }: { name: string }) => {
@@ -45,10 +61,13 @@ export const userResolvers = {
     createUser: async (_: any, args: { name: string; email: string }) => {
       return addUser(args);
     },
-    deleteUser: async (_: any, {user_id} : {user_id:string}) => {
+    deleteUser: async (_: any, { user_id }: { user_id: string }) => {
       return deleteUser(user_id);
     },
-    updateUser: async (_: any, args: {user_id: string; name?: string; email?: string}) => {
+    updateUser: async (
+      _: any,
+      args: { user_id: string; name?: string; email?: string }
+    ) => {
       return updateUser(args);
     },
   },
